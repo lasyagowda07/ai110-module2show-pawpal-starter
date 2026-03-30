@@ -1,7 +1,10 @@
 # PawPal+ Project Reflection
 
 ## 1. System Design
-
+Core Actions:
+	•	Add a pet so the owner can manage multiple animals in one place
+	•	Add or schedule tasks for each pet, including details like time, duration, and priority
+	•	View a daily schedule that organizes tasks in a clear and prioritized order
 **a. Initial design**
 
 - Briefly describe your initial UML design.
