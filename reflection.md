@@ -41,12 +41,17 @@ Finally, I simplified the Scheduler by making it stateless, since it only needs 
 
 - What constraints does your scheduler consider (for example: time, priority, preferences)?
 - How did you decide which constraints mattered most?
+My scheduler mainly considers time, task status, recurrence, and in some cases priority. Time is the main constraint because tasks need to be ordered correctly throughout the day. Task status also matters because completed tasks should not continue appearing in the current daily schedule. Recurrence is important because daily and weekly tasks need to generate the next occurrence automatically after completion.
+
+I also added support for priority-based sorting through a separate scheduler method. This allows higher priority tasks to be surfaced first when needed, even though the default daily schedule is primarily organized by time.
 
 **b. Tradeoffs**
 
 - Describe one tradeoff your scheduler makes.
 - Why is that tradeoff reasonable for this scenario?
+One tradeoff my scheduler makes is that it only checks for conflicts based on exact matching time values. It does not consider overlapping durations between tasks. For example, if one task runs from 08:00 to 08:30 and another starts at 08:15, the system will not detect this as a conflict.
 
+This tradeoff keeps the implementation simple and efficient, since comparing exact time strings is straightforward and fast. For this project, it is reasonable because the goal is to demonstrate basic scheduling logic rather than build a fully optimized time management system. More complex overlap detection could be added in future improvements if needed.
 ---
 
 ## 3. AI Collaboration
