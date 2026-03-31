@@ -28,7 +28,8 @@ with st.expander("What this app can do", expanded=True):
 - Add pets
 - Add tasks for each pet
 - View all current tasks
-- Generate today's schedule
+- Generate a sorted daily schedule
+- View priority-based scheduling
 - Detect time conflicts
 """
     )
@@ -146,6 +147,7 @@ if all_tasks:
                 "Duration": task.duration,
                 "Priority": task.priority,
                 "Recurrence": task.recurrence,
+                "Due Date": str(task.due_date),
                 "Completed": task.completed,
             }
         )
@@ -154,29 +156,62 @@ else:
     st.info("No tasks yet. Add one above.")
 
 # --------------------------------------------------
-# Generate schedule
+# Build schedule
 # --------------------------------------------------
 
 st.divider()
 st.subheader("Build Schedule")
 
+schedule_view = st.radio(
+    "Choose schedule view",
+    ["Sorted by Time", "Sorted by Priority"],
+    horizontal=True
+)
+
 if st.button("Generate Schedule"):
-    schedule = st.session_state.scheduler.get_daily_schedule(st.session_state.owner)
-    conflicts = st.session_state.scheduler.detect_conflicts(schedule)
+    scheduler = st.session_state.scheduler
+    owner = st.session_state.owner
+
+    if schedule_view == "Sorted by Time":
+        schedule = scheduler.get_daily_schedule(owner)
+    else:
+        schedule = scheduler.get_schedule_by_priority(owner)
+
+    warnings = scheduler.get_conflict_warnings(schedule)
 
     if schedule:
-        st.markdown("### Today's Schedule")
+        st.success("Schedule generated successfully.")
+
+        schedule_rows = []
         for pet_name, task in schedule:
-            st.write(str(task))
+            schedule_rows.append(
+                {
+                    "Time": task.time,
+                    "Pet": pet_name,
+                    "Task": task.title,
+                    "Type": task.task_type,
+                    "Duration": task.duration,
+                    "Priority": task.priority,
+                    "Recurrence": task.recurrence,
+                }
+            )
+
+        st.markdown("### Today's Schedule")
+        st.table(schedule_rows)
+
+        high_priority = scheduler.filter_by_priority(schedule, "high")
+        if high_priority:
+            st.markdown("### High Priority Tasks")
+            for pet_name, task in high_priority:
+                st.write(f"• {task.time} — {pet_name}: {task.title}")
+
     else:
         st.info("No tasks due today.")
 
-    if conflicts:
-        st.warning("Conflicts detected.")
-        for group in conflicts:
-            time_slot = group[0][1].time
-            conflict_text = ", ".join(f"{pn}: {t.title}" for pn, t in group)
-            st.write(f"{time_slot} → {conflict_text}")
+    if warnings:
+        st.markdown("### Conflict Warnings")
+        for warning in warnings:
+            st.warning(warning)
 
     st.markdown("### Schedule Summary")
-    st.text(st.session_state.scheduler.daily_summary(st.session_state.owner))
+    st.text(scheduler.daily_summary(owner))

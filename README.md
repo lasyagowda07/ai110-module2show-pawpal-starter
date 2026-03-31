@@ -69,3 +69,18 @@ The test suite covers the core behaviors of the system:
 	•	Conflict detection: tasks scheduled at the same time generate warning messages
 
 Confidence Level 4/5
+Features
+
+The PawPal+ system includes several intelligent scheduling features:
+	•	Sorting by time: Tasks are automatically ordered chronologically for a clear daily plan
+	•	Priority-based scheduling: Tasks can also be sorted by priority (high to low)
+	•	Task filtering: Tasks can be filtered by pet, type, priority, or completion status
+	•	Recurring tasks: Daily and weekly tasks automatically generate the next occurrence when completed
+	•	Conflict detection: Tasks scheduled at the same time are flagged with warnings
+	•	Schedule summary: A readable summary shows all tasks and highlights conflicts and completion status
+
+
+DEMO:
+<a href="/course_images/ai110/pawpal_demo.png" target="_blank">
+<img src='/course_images/ai110/pawpal_app.png' title='PawPal App' alt='PawPal App' class='center-block' />
+</a>
