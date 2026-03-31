@@ -9,6 +9,17 @@ Core Actions:
 
 - Briefly describe your initial UML design.
 - What classes did you include, and what responsibilities did you assign to each?
+My initial design for PawPal+ was based on four main classes: Owner, Pet, Task, and Scheduler. I chose these classes because they match the main parts of the problem and helped me keep the system simple and organized.
+
+The Owner class represents the person using the app. It stores basic information like the owner’s name, email, and the list of pets they manage. Its responsibility is to add and remove pets and collect all tasks across pets when needed.
+
+The Pet class represents each individual pet. It stores information like the pet’s name, species, age, and its list of tasks. Its responsibility is to manage tasks for that pet, such as adding a task, removing a task, and getting pending tasks or tasks by type.
+
+The Task class represents a single pet care activity, such as feeding, walking, or medication. It stores the task ID, title, type, time, duration, priority, recurrence, and completion status. Its responsibility is to represent one unit of work and provide actions like marking a task as complete and checking whether it is due today.
+
+The Scheduler class is the main logic layer of the system. It is responsible for building the daily schedule using the tasks stored under each pet and owner. It can sort tasks by time, filter them by pet or completion status, generate a daily schedule, and detect conflicts when multiple tasks happen at the same time.
+
+Overall, I designed the system so that each class has a clear responsibility. Owner manages pets, Pet manages tasks, Task stores activity details, and Scheduler handles the scheduling logic. This made the design modular and easier to test and extend later.
 
 **b. Design changes**
 
@@ -16,6 +27,13 @@ Core Actions:
 - If yes, describe at least one change and why you made it.
 
 ---
+Yes, my design changed during implementation after reviewing the class structure. One key change was adding a reference to the pet inside the Task class, so tasks always know which pet they belong to. This made the system more reliable when tasks are used outside of grouped data.
+
+I also fixed the weekly recurrence logic. Initially, weekly tasks were showing up every day, so I added a way to store the original day and compare it with the current day.
+
+Another improvement was adding validation to methods like removing pets or tasks, so they raise errors instead of failing silently.
+
+Finally, I simplified the Scheduler by making it stateless, since it only needs to process data rather than store it.
 
 ## 2. Scheduling Logic and Tradeoffs
 
