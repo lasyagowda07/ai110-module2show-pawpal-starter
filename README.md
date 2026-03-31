@@ -82,5 +82,5 @@ The PawPal+ system includes several intelligent scheduling features:
 
 DEMO:
 <a href="/ai110-module2show-pawpal-starter/pawpal_demo.png" target="_blank">
-<img src='/ai110-module2show-pawpal-starter/pawpal_demo.png' title='PawPal App' alt='PawPal App' class='center-block' />
+<img src='pawpal_demo.png' title='PawPal App' alt='PawPal App' class='center-block' />
 </a>
