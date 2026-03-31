@@ -51,3 +51,21 @@ The scheduling system was enhanced with several features to make it more intelli
 	•	A summary view highlights completed tasks and scheduling conflicts
 
 These improvements make the system more dynamic and closer to a real-world task planner.
+
+Testing PawPal+
+
+To verify the correctness of the PawPal+ system, an automated test suite was implemented using pytest.
+
+How to run tests
+
+Run the following command in the project root:
+python -m pytest
+
+What is tested
+
+The test suite covers the core behaviors of the system:
+	•	Sorting correctness: tasks are returned in chronological order
+	•	Recurrence logic: completing a recurring task creates the next occurrence
+	•	Conflict detection: tasks scheduled at the same time generate warning messages
+
+Confidence Level 4/5
